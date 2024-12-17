@@ -1,0 +1,119 @@
+ratebeer(dev)> Brewery.create name: 'BrewDog', year: 2007        
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Brewery Create (0.4ms)  INSERT INTO "breweries" ("name", "year", "created_at", "updated_at") VALUES ('BrewDog', 2007, '2024-12-17 12:17:38.713334', '2024-12-17 12:17:38.713334') RETURNING "id" 
+/*application='Ratebeer'*/
+  TRANSACTION (0.0ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Brewery:0x0000020b92450f20
+ id: 5,
+ name: "BrewDog",
+ year: 2007,
+ created_at: "2024-12-17 12:17:38.713334000 +0000",
+ updated_at: "2024-12-17 12:17:38.713334000 +0000">
+ratebeer(dev)> reload!
+Reloading...
+ratebeer(dev)> b = Brewery.find_by(name: 'BrewDog')
+  Brewery Load (0.1ms)  SELECT "breweries".* FROM "breweries" WHERE "breweries"."name" = 'BrewDog' LIMIT 1 /*application='Ratebeer'*/
+=>
+#<Brewery:0x0000020b91208ed0
+...
+ratebeer(dev)> b.beers.create name: 'Punk IPA', style: 'IPA'     
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Beer Create (0.4ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES ('Punk IPA', 'IPA', 
+5, '2024-12-17 12:19:03.806543', '2024-12-17 12:19:03.806543') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (5.5ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Beer:0x0000020b91a8ecf8
+ id: 13,
+ name: "Punk IPA",
+ style: "IPA",
+ brewery_id: 5,
+ created_at: "2024-12-17 12:19:03.806543000 +0000",
+ updated_at: "2024-12-17 12:19:03.806543000 +0000">
+ratebeer(dev)> b.beers.create name: 'Nanny State', style: 'lowAlcohol'
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Beer Create (0.4ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES ('Nanny State', 'lowAlcohol', 5, '2024-12-17 12:21:13.401988', '2024-12-17 12:21:13.401988') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Beer:0x0000020b9247f000
+ id: 14,
+ name: "Nanny State",
+ style: "lowAlcohol",
+ brewery_id: 5,
+ created_at: "2024-12-17 12:21:13.401988000 +0000",
+ updated_at: "2024-12-17 12:21:13.401988000 +0000">
+ratebeer(dev)> beer = Beer.find_by(name: 'Punk IPA')
+  Beer Load (0.1ms)  SELECT "beers".* FROM "beers" WHERE "beers"."name" = 'Punk IPA' LIMIT 1 /*application='Ratebeer'*/
+=>
+#<Beer:0x0000020b92b47bd0
+ratebeer(dev)> beer.ratings.create score: 15
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (15, 13, '2024-12-17 12:22:49.596533', '2024-12-17 12:22:49.596533') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.0ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b92978f20
+ id: 4,
+ score: 15,
+ beer_id: 13,
+ created_at: "2024-12-17 12:22:49.596533000 +0000",
+ updated_at: "2024-12-17 12:22:49.596533000 +0000">
+ratebeer(dev)> beer.ratings.create score: 30
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.5ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (30, 13, '2024-12-17 12:22:54.518491', '2024-12-17 12:22:54.518491') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b92b494d0
+ id: 5,
+ score: 30,
+ beer_id: 13,
+ created_at: "2024-12-17 12:22:54.518491000 +0000",
+ updated_at: "2024-12-17 12:22:54.518491000 +0000">
+ratebeer(dev)> beer.ratings.create score: 45
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (45, 13, '2024-12-17 12:22:57.994692', '2024-12-17 12:22:57.994692') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b9245fca0
+ id: 6,
+ score: 45,
+ beer_id: 13,
+ created_at: "2024-12-17 12:22:57.994692000 +0000",
+ updated_at: "2024-12-17 12:22:57.994692000 +0000">
+ratebeer(dev)> beer = Beer.find_by(name: 'Nanny State')
+  Beer Load (0.1ms)  SELECT "beers".* FROM "beers" WHERE "beers"."name" = 'Nanny State' LIMIT 1 /*application='Ratebeer'*/        
+=>
+#<Beer:0x0000020b92b4ac90
+...
+ratebeer(dev)> beer.ratings.create score: 21
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (21, 14, '2024-12-17 12:23:28.805627', '2024-12-17 12:23:28.805627') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.1ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b92b462d0
+ id: 7,
+ score: 21,
+ beer_id: 14,
+ created_at: "2024-12-17 12:23:28.805627000 +0000",
+ updated_at: "2024-12-17 12:23:28.805627000 +0000">
+ratebeer(dev)> beer.ratings.create score: 15
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (15, 14, '2024-12-17 12:23:33.327577', '2024-12-17 12:23:33.327577') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.0ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b92b4b910
+ id: 8,
+ score: 15,
+ beer_id: 14,
+ created_at: "2024-12-17 12:23:33.327577000 +0000",
+ updated_at: "2024-12-17 12:23:33.327577000 +0000">
+ratebeer(dev)> beer.ratings.create score: 33
+  TRANSACTION (0.0ms)  BEGIN immediate TRANSACTION /*application='Ratebeer'*/
+  Rating Create (0.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (33, 14, '2024-12-17 12:23:37.017434', '2024-12-17 12:23:37.017434') RETURNING "id" /*application='Ratebeer'*/
+  TRANSACTION (0.0ms)  COMMIT TRANSACTION /*application='Ratebeer'*/
+=>
+#<Rating:0x0000020b92b41910
+ id: 9,
+ score: 33,
+ beer_id: 14,
+ created_at: "2024-12-17 12:23:37.017434000 +0000",
+ updated_at: "2024-12-17 12:23:37.017434000 +0000">
