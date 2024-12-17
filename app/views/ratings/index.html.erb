@@ -1,0 +1,6 @@
+<ul>
+  <% @ratings.each do |rating|%>
+  <%= render rating %>
+  <% end %>
+</ul>
+<p>total ratings: <%= @ratings.count %></p>
